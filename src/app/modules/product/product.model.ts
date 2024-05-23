@@ -1,5 +1,5 @@
 import { Schema, model, connect } from 'mongoose';
-import { Product, Product, Variants } from './product.interface';
+import { Product,  Variants } from './product.interface';
 
 
 const variantSchema = new Schema<Variants>({
