@@ -21,7 +21,22 @@ const getSingleProductFromDB = async(id: string) => {
   return result
 }
 
+const updateSingleProduct = async (productId: string, updateFields: Partial<Product>) => {
+  const result = await ProductModel.findOneAndUpdate(
+    {_id:new mongoose.Types.ObjectId(productId) },
+    {$set: updateFields},
+    {new: true}
+  )
+  return result;
+}
+
+const deleteSingleProduct = async(id: string) => {
+  const result = await ProductModel.findOneAndDelete({_id: new mongoose.Types.ObjectId(id)})
+  return result ;
+}
+
+
 
 export const ProductServices = {
-  createProductIntoDB, getAllProductsFromDB, getSingleProductFromDB
+  createProductIntoDB, getAllProductsFromDB, getSingleProductFromDB, updateSingleProduct, deleteSingleProduct
 }
