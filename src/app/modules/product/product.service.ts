@@ -1,7 +1,6 @@
-import { create } from "domain";
+import mongoose from "mongoose";
 import { Product } from "./product.interface";
 import { ProductModel } from "./product.model";
-
 
 const createProductIntoDB = async (product: Product) => {
 const result = await ProductModel.create(product)
@@ -9,6 +8,20 @@ const result = await ProductModel.create(product)
 return result;
 }
 
+
+const getAllProductsFromDB = async () =>{
+  const result = await ProductModel.find()
+
+  return result;
+}
+
+const getSingleProductFromDB = async(id: string) => {
+  const result =await ProductModel.findOne({_id: new mongoose.Types.ObjectId(id)})
+
+  return result
+}
+
+
 export const ProductServices = {
-  createProductIntoDB
+  createProductIntoDB, getAllProductsFromDB, getSingleProductFromDB
 }
