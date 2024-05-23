@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { ProductServices } from "./product.service";
-import { stdout } from "process";
 import { Product } from "./product.interface";
 import { ProductModel } from "./product.model";
 
