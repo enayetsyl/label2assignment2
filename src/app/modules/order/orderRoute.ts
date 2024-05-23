@@ -5,6 +5,7 @@ const router = express.Router()
 
 router.post("/new-order", OrderControllers.newOrder)
 router.get("/all-orders", OrderControllers.allOrders)
+router.get("/", OrderControllers.getEmailOrder)
 
 
 export const OrderRoutes = router
