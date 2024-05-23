@@ -35,8 +35,12 @@ const deleteSingleProduct = async(id: string) => {
   return result ;
 }
 
+const searchProductsData = async (searchTerm: string) => {
+  const result = await ProductModel.find({ name: {$regex: searchTerm, $options: 'i'}})
+  return result
+}
 
 
 export const ProductServices = {
-  createProductIntoDB, getAllProductsFromDB, getSingleProductFromDB, updateSingleProduct, deleteSingleProduct
+  createProductIntoDB, getAllProductsFromDB, getSingleProductFromDB, updateSingleProduct, deleteSingleProduct, searchProductsData
 }
