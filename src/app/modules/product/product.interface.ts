@@ -1,6 +1,6 @@
 import { Schema, model, connect } from 'mongoose';
 
-type Variants = {
+export type Variants = {
   type: string;
   value: string;
 }
