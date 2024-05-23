@@ -29,6 +29,11 @@ if(inventoryAdjust && (inventoryAdjust?.inventory.quantity - orderData.quantity)
 }
 
 
+const getAllOrders = async () => {
+  const result = await OrderModel.find()
+  return result
+}
+
 export const OrderServices = {
-  createSingleOrder
+  createSingleOrder, getAllOrders
 }
