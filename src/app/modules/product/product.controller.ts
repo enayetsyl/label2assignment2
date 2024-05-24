@@ -2,13 +2,17 @@ import { Request, Response } from "express";
 import { ProductServices } from "./product.service";
 import { Product } from "./product.interface";
 import { ProductModel } from "./product.model";
+import { productValidationSchema } from "./product.validation";
+import { z } from "zod";
 
 
 const createProduct = async (req: Request, res: Response) => {
   try {
-    const product = req.body
+  const product = req.body
 
-  const result = await ProductServices.createProductIntoDB(product)
+  const zodParsedData = productValidationSchema.parse(product)
+
+  const result = await ProductServices.createProductIntoDB(zodParsedData)
 
   res.status(200).json({
     success: true,
@@ -17,10 +21,19 @@ const createProduct = async (req: Request, res: Response) => {
   })
   } catch (error) {
     console.log(error)
-    res.status(500).json({
-      success:false,
-      message: "Error in product creation"
-    })
+    if (error instanceof z.ZodError) {
+      const errorMessage = "Validation error: " + error.errors.map((err) => err.message).join(", ");
+      res.status(400).json({
+        success: false,
+        message: errorMessage,
+      });
+    } else {
+      res.status(500).json({
+        success:false,
+        message: "Error in product creation"
+      })
+      
+    }
   }
 
 }
@@ -68,7 +81,8 @@ const updateProduct = async (req: Request, res: Response) => {
   const { productId } = req.params
   const updateFields: Partial<Product> = req.body;
   try {
-    const result = await ProductServices.updateSingleProduct(productId, updateFields)
+    const zodParsedUpdateField = productValidationSchema.partial().parse(updateFields)
+    const result = await ProductServices.updateSingleProduct(productId, zodParsedUpdateField)
     res.status(200).json({
       success: true,
       message: "Product Updated successfully.",
@@ -76,10 +90,18 @@ const updateProduct = async (req: Request, res: Response) => {
     })
   } catch (error) {
     console.log(error)
-    res.status(500).json({
-      success:false,
-      message: "Error in updating product"
-    })
+    if (error instanceof z.ZodError) {
+      const errorMessage = "Validation error" + error.errors.map((err)=> err.message).join(", ");
+      res.status(400).json({
+        success: false,
+        message: errorMessage,
+      });
+    } else {
+      res.status(500).json({
+        success:false,
+        message: "Error in updating product"
+      })
+    }
   }
 }
 
