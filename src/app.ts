@@ -17,5 +17,11 @@ app.get('*', (req: Request, res: Response) => {
     "message": "Route not found"
    })
 })
+app.get('/', (req: Request, res: Response) => {
+  res.json({
+    "success": false,
+    "message": "Hello"
+   })
+})
 
 export default app

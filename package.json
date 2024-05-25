@@ -11,6 +11,8 @@
     "lint": "npx eslint .",
     "lint:fix": "npx eslint . --fix",
     "start:dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "prettier": "prettier --ignore-path .gitignore --write \"./src/**/*.+(js|ts|json)\"",
+    "prettier:fix": "npx prettier --write src",
     "start:prod": "node ./dist/server.js"
   },
   "keywords": [],
@@ -33,6 +35,8 @@
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
     "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.2.5",
     "typescript": "^5.4.5"
   }
 }
