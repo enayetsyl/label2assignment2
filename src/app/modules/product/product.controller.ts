@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { ProductServices } from "./product.service";
 import { Product } from "./product.interface";
-import { ProductModel } from "./product.model";
 import { productValidationSchema } from "./product.validation";
 import { z } from "zod";
 
@@ -109,7 +108,7 @@ const updateProduct = async (req: Request, res: Response) => {
 const deleteProduct = async(req:Request, res: Response) => {
   const { productId } = req.params;
   try {
-    const result = await ProductServices.deleteSingleProduct(productId)
+     await ProductServices.deleteSingleProduct(productId)
     res.status(200).json({
       success: true,
       message: "Product deleted successfully",

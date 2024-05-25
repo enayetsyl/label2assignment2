@@ -1,12 +1,10 @@
 import mongoose from "mongoose"
 import { ProductModel } from "../product/product.model"
 import { Order } from "./order.interface"
-import { Product } from "../product/product.interface"
 import { OrderModel } from "./order.model"
 
 
 const createSingleOrder = async (orderData: Order) => {
-  try {
     const productData = await ProductModel.findById({_id: new mongoose.Types.ObjectId(orderData.productId)})
 
     if(productData && productData.inventory.quantity < orderData.quantity){
@@ -19,13 +17,10 @@ const createSingleOrder = async (orderData: Order) => {
     }})
 console.log(inventoryAdjust)
 if(inventoryAdjust && (inventoryAdjust?.inventory.quantity - orderData.quantity) == 0) {
-  const inStockAdjust = await ProductModel.findByIdAndUpdate({_id: new mongoose.Types.ObjectId(orderData.productId)},{$set: {"inventory.inStock": false}})
+   await ProductModel.findByIdAndUpdate({_id: new mongoose.Types.ObjectId(orderData.productId)},{$set: {"inventory.inStock": false}})
 
 }
     return result
-  } catch (error) {
-    throw error
-  }
 }
 
 

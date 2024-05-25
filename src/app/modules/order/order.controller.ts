@@ -6,6 +6,7 @@ import orderValidationSchema, { EmailSchema } from "./order.validation";
 const newOrder = async (req: Request, res: Response) => {
   const orderData = req.body;
   try {
+   
     const zodParsedData = orderValidationSchema.parse(orderData)
     const result = await OrderServices.createSingleOrder(zodParsedData);
     res.status(200).json({
