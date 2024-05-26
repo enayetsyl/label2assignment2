@@ -19,6 +19,7 @@ const getSingleProductFromDB = async (id) => {
     return result;
 };
 const updateSingleProduct = async (productId, updateFields) => {
+    console.log('pr', productId, updateFields);
     const result = await product_model_1.ProductModel.findOneAndUpdate({ _id: new mongoose_1.default.Types.ObjectId(productId) }, { $set: updateFields }, { new: true });
     return result;
 };
