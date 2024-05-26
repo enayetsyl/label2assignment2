@@ -43,21 +43,27 @@ const newOrder = async (req: Request, res: Response) => {
 const allOrders = async (req: Request, res: Response) => {
   try {
     const result = await OrderServices.getAllOrders()
-    res.status(200).json({
-      success: true,
-      message: "Orders fetched successfully",
-      data: result
-    })
+
+    if(result.length < 1){
+      res.status(200).json({
+        success: false,
+        message: "Order not found",
+        
+      })
+    } else{
+      res.status(200).json({
+        success: true,
+        message: "Orders fetched successfully",
+        data: result
+      })
+    }
+
   } catch (error) {
     console.log(error)
-   
-      res.status(500).json({
-        
-          "success": false,
-          "message": "Order not found"
-         
+         res.status(500).json({
+         "success": false,
+          "message": "An error occur"
       })
-
   }
 }
 
@@ -67,12 +73,18 @@ const getEmailOrder = async (req: Request, res: Response) => {
 
   try {
     const result = await OrderServices.getOrdersByEmail(email)
-    res.status(200).json({
-      success: true,
-      message: "Orders fetched successfully for user email!",
-      data: result
-    })
-
+    if (result.length < 1) {
+      res.status(200).json({
+        success: false,
+        message: "Orders not found for user email!",
+      })
+    } else {
+      res.status(200).json({
+        success: true,
+        message: "Orders fetched successfully for user email!",
+        data: result
+      })
+    }
   } catch (error) {
     res.status(500).json({
       success: false,

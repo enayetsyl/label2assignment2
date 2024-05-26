@@ -22,8 +22,9 @@ const getSingleProductFromDB = async(id: string) => {
 }
 
 const updateSingleProduct = async (productId: string, updateFields: Partial<Product>) => {
+  console.log('pr', productId, updateFields)
   const result = await ProductModel.findOneAndUpdate(
-    {_id:new mongoose.Types.ObjectId(productId) },
+    {_id: new mongoose.Types.ObjectId(productId) },
     {$set: updateFields},
     {new: true}
   )

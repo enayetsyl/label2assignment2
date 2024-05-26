@@ -80,8 +80,12 @@ const updateProduct = async (req: Request, res: Response) => {
   const { productId } = req.params
   const updateFields: Partial<Product> = req.body;
   try {
+    console.log('route hit')
     const zodParsedUpdateField = productValidationSchema.partial().parse(updateFields)
+    console.log('zodParsedUpdateField', zodParsedUpdateField)
+    console.log('productId', productId)
     const result = await ProductServices.updateSingleProduct(productId, zodParsedUpdateField)
+    console.log('result', result)
     res.status(200).json({
       success: true,
       message: "Product Updated successfully.",
