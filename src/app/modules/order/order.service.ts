@@ -37,6 +37,7 @@ const getAllOrders = async () => {
 };
 
 const getOrdersByEmail = async (email: string) => {
+  console.log(email)
   const result = await OrderModel.find({ email });
   return result;
 };
